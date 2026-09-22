@@ -1,0 +1,6 @@
+COUNTRY_NAME,SALES_ZONE,TRADE_TYPE,SHIP_TO_CITY,PROD_GROUP,BRAND_DESC,ITEM_CODE,MEASURE,SHIP_DATE,JAN_2026,FEB_2026,MAR_2026
+India,North,online,Delhi,Beverages,Acme,ACM-COLA-500,Value,01/01/2026,"12,450","13,180","12,960"
+IND,North,ecommerce,Delhi,Beverages,Acme,ACM-COLA-500,Units,20260101,120,127,124
+India,West,modern trade,Mumbai,Personal Care,Nova,NVA-SHM-200,Value,45658,"8,240","8,910","9,120"
+India,South,general trade,Bengaluru,Home Care,Purex,PXR-CLN-1L,Units,2026-03-01,-64,72,68
+India,South,general trade,Bengaluru,Home Care,Purex,PXR-CLN-1L,Units,2026-03-01,-64,72,68

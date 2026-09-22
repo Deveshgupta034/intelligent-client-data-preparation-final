@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Intelligent Client Data Prep — Crazy Taste-Skill Executive Mockup</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-oled: #050811;
+      --chassis-border: rgba(255, 255, 255, 0.08);
+      --chassis-outer: rgba(15, 23, 42, 0.4);
+      --core-bg: #090e1a;
+      --card-highlight: rgba(255, 255, 255, 0.03);
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --neon-cyan: #38bdf8;
+      --neon-emerald: #10b981;
+      --neon-blue: #3b82f6;
+      --neon-violet: #a855f7;
+      --neon-rose: #f43f5e;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background-color: var(--bg-oled);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Tactile Cyber Grid Matrix & Ambient Glowing Orbs */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: radial-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px);
+      background-size: 28px 28px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Ambient Breathing Cyber Orbs */
+    .ambient-orb-1 {
+      position: fixed;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      top: -200px;
+      right: -100px;
+      background: radial-gradient(circle, rgba(56, 189, 248, 0.12) 0%, rgba(99, 102, 241, 0.06) 40%, transparent 70%);
+      filter: blur(80px);
+      pointer-events: none;
+      z-index: 0;
+      animation: orbFloat1 18s ease-in-out infinite alternate;
+    }
+
+    .ambient-orb-2 {
+      position: fixed;
+      width: 550px;
+      height: 550px;
+      border-radius: 50%;
+      bottom: -150px;
+      left: 100px;
+      background: radial-gradient(circle, rgba(168, 85, 247, 0.1) 0%, rgba(16, 185, 129, 0.05) 50%, transparent 70%);
+      filter: blur(80px);
+      pointer-events: none;
+      z-index: 0;
+      animation: orbFloat2 22s ease-in-out infinite alternate;
+    }
+
+    @keyframes orbFloat1 {
+      0% { transform: translate3d(0, 0, 0) scale(1); }
+      100% { transform: translate3d(-60px, 80px, 0) scale(1.15); }
+    }
+
+    @keyframes orbFloat2 {
+      0% { transform: translate3d(0, 0, 0) scale(1); }
+      100% { transform: translate3d(80px, -50px, 0) scale(1.1); }
+    }
+
+    /* SIDEBAR */
+    .sidebar {
+      width: 280px;
+      background: rgba(9, 14, 26, 0.85);
+      backdrop-filter: blur(20px);
+      border-right: 1px solid rgba(255, 255, 255, 0.06);
+      padding: 24px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 10;
+    }
+
+    .sidebar-nav-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 11px 16px;
+      border-radius: 12px;
+      color: var(--text-muted);
+      font-weight: 600;
+      font-size: 0.88rem;
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
+    }
+    .sidebar-nav-item:hover {
+      background: rgba(255, 255, 255, 0.04);
+      color: #ffffff;
+      transform: translateX(3px);
+    }
+    .sidebar-nav-item.active {
+      background: rgba(30, 41, 59, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #ffffff;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+    }
+
+    .sidebar-bottom {
+      margin-top: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    /* MAIN CONTAINER */
+    .main-viewport {
+      flex: 1;
+      padding: 24px 36px 60px;
+      max-width: 1380px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 10;
+      overflow-y: auto;
+    }
+
+    /* TOP COMMAND MODULE BAR */
+    .command-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(13, 19, 34, 0.7);
+      backdrop-filter: blur(24px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 12px 20px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.1);
+      margin-bottom: 24px;
+    }
+
+    .brand-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    /* 3D Prism Diamond Logo */
+    .prism-logo {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #4f46e5 0%, #38bdf8 50%, #818cf8 100%);
+      box-shadow: 0 0 20px rgba(56, 189, 248, 0.6), inset 0 1px 2px rgba(255, 255, 255, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.15rem;
+      font-weight: 900;
+      animation: pulseGlow 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes pulseGlow {
+      0% { box-shadow: 0 0 16px rgba(56, 189, 248, 0.4); }
+      100% { box-shadow: 0 0 26px rgba(56, 189, 248, 0.8), 0 0 10px rgba(129, 140, 248, 0.6); }
+    }
+
+    .brand-title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 850;
+      letter-spacing: 0.05em;
+      color: #ffffff;
+      text-transform: uppercase;
+    }
+
+    .hud-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(6, 78, 59, 0.25);
+      border: 1px solid rgba(16, 185, 129, 0.4);
+      padding: 7px 16px;
+      border-radius: 99px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: #34d399;
+      letter-spacing: 0.06em;
+      box-shadow: 0 0 16px rgba(16, 185, 129, 0.2);
+    }
+
+    .hud-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 99px;
+      background: #10b981;
+      box-shadow: 0 0 8px #10b981;
+    }
+
+    /* THE DOPPELRAND (DOUBLE-BEZEL) HARDWARE CARDS */
+    .doppelrand-chassis {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 18px;
+      padding: 4px;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6), inset 0 1px 1px rgba(255, 255, 255, 0.08);
+      transition: all 0.3s cubic-bezier(0.2, 0, 0, 1);
+    }
+    .doppelrand-chassis:hover {
+      border-color: rgba(255, 255, 255, 0.16);
+      transform: translateY(-2px);
+      box-shadow: 0 20px 48px rgba(0, 0, 0, 0.7);
+    }
+
+    .doppelrand-core {
+      background: #090e1a;
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      border-radius: 14px;
+      padding: 18px 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* PHASE DECK */
+    .phase-deck {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr auto 1fr;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+
+    .phase-chevron {
+      color: #475569;
+      font-size: 1.3rem;
+      font-weight: 800;
+    }
+
+    .phase-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+
+    .phase-tag {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.76rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .tag-emerald { color: #34d399; }
+    .tag-blue { color: #60a5fa; }
+    .tag-violet { color: #c084fc; }
+
+    .phase-title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 750;
+      color: #ffffff;
+      margin-bottom: 12px;
+    }
+
+    /* KINETIC LASER PROGRESS TRACK */
+    .laser-track {
+      width: 100%;
+      height: 5px;
+      background: rgba(30, 41, 59, 0.6);
+      border-radius: 99px;
+      overflow: hidden;
+      position: relative;
+      margin-bottom: 14px;
+    }
+
+    .laser-fill-emerald {
+      height: 100%;
+      width: 85%;
+      background: linear-gradient(90deg, #059669 0%, #10b981 70%, #34d399 100%);
+      border-radius: 99px;
+      position: relative;
+      box-shadow: 0 0 12px #10b981;
+    }
+
+    /* Laser shimmer beam animation */
+    .laser-fill-emerald::after, .laser-fill-blue::after, .laser-fill-violet::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
+      animation: laserSweep 2.5s infinite;
+    }
+
+    @keyframes laserSweep {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+
+    .laser-fill-blue {
+      height: 100%;
+      width: 50%;
+      background: linear-gradient(90deg, #1d4ed8 0%, #3b82f6 70%, #60a5fa 100%);
+      border-radius: 99px;
+      position: relative;
+      box-shadow: 0 0 12px #3b82f6;
+    }
+
+    .laser-fill-violet {
+      height: 100%;
+      width: 15%;
+      background: linear-gradient(90deg, #6d28d9 0%, #8b5cf6 70%, #c084fc 100%);
+      border-radius: 99px;
+      position: relative;
+      box-shadow: 0 0 12px #8b5cf6;
+    }
+
+    .sub-steps {
+      display: flex;
+      gap: 6px;
+    }
+    .sub-step {
+      flex: 1;
+      text-align: center;
+      padding: 6px 4px;
+      border-radius: 8px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      border: 1px solid transparent;
+      transition: all 0.2s cubic-bezier(0.32, 0.72, 0, 1);
+    }
+    .sub-step-done {
+      background: rgba(16, 185, 129, 0.2);
+      border-color: rgba(52, 211, 153, 0.35);
+      color: #a7f3d0;
+    }
+    .sub-step-active {
+      background: linear-gradient(135deg, #4f46e5 0%, #2563eb 100%);
+      color: #ffffff;
+      font-weight: 700;
+      box-shadow: 0 0 14px rgba(59, 130, 246, 0.6);
+      transform: translateY(-1px);
+    }
+    .sub-step-pending {
+      background: rgba(30, 41, 59, 0.5);
+      color: #94a3b8;
+      border-color: rgba(255, 255, 255, 0.05);
+    }
+
+    /* 4 KPI METRIC CARDS ROW */
+    .kpi-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+    .kpi-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 6px;
+    }
+    .kpi-val-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+    .kpi-val {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 1.65rem;
+      font-weight: 800;
+      color: #ffffff;
+      font-variant-numeric: tabular-nums;
+      letter-spacing: -0.02em;
+    }
+    .kpi-sub {
+      font-size: 0.74rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    /* 2-COLUMN BENTO GRID */
+    .bento-grid {
+      display: grid;
+      grid-template-columns: 1.8fr 1.2fr;
+      gap: 18px;
+    }
+
+    /* VIEWFINDER HUD UPLOAD DOCKING PORT */
+    .docking-port {
+      border: 2px dashed rgba(255, 255, 255, 0.12);
+      border-radius: 16px;
+      padding: 46px 24px;
+      text-align: center;
+      position: relative;
+      background: rgba(15, 23, 42, 0.4);
+      transition: all 0.25s cubic-bezier(0.2, 0, 0, 1);
+    }
+    .docking-port:hover {
+      border-color: var(--neon-cyan);
+      background: rgba(30, 58, 138, 0.15);
+      box-shadow: 0 0 24px rgba(56, 189, 248, 0.2);
+    }
+
+    /* Viewfinder HUD Corner Brackets */
+    .hud-corner {
+      position: absolute;
+      width: 22px;
+      height: 22px;
+      border: 2.5px solid transparent;
+      pointer-events: none;
+    }
+    .hud-tl { top: 12px; left: 12px; border-top-color: var(--neon-cyan); border-left-color: var(--neon-cyan); }
+    .hud-tr { top: 12px; right: 12px; border-top-color: var(--neon-violet); border-right-color: var(--neon-violet); }
+    .hud-bl { bottom: 12px; left: 12px; border-bottom-color: var(--neon-cyan); border-left-color: var(--neon-cyan); }
+    .hud-br { bottom: 12px; right: 12px; border-bottom-color: var(--neon-violet); border-right-color: var(--neon-violet); }
+
+    .beacon-icon {
+      font-size: 2.4rem;
+      color: var(--neon-cyan);
+      margin-bottom: 10px;
+      display: inline-block;
+      filter: drop-shadow(0 0 10px rgba(56, 189, 248, 0.7));
+      animation: beaconBounce 3s ease-in-out infinite;
+    }
+    @keyframes beaconBounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-4px); }
+    }
+
+    .dock-title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 6px;
+    }
+    .dock-sub {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+
+    /* BUTTON-IN-BUTTON KINETIC ACTION PATTERN */
+    .btn-hardware {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: linear-gradient(135deg, #4f46e5 0%, #2563eb 100%);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      border-radius: 99px;
+      padding: 10px 24px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.92rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(79, 70, 229, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.3);
+      transition: all 0.25s cubic-bezier(0.32, 0.72, 0, 1);
+    }
+    .btn-hardware:hover {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 8px 30px rgba(79, 70, 229, 0.7), inset 0 1px 1px rgba(255, 255, 255, 0.4);
+    }
+    .btn-inner-lens {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      transition: transform 0.25s cubic-bezier(0.32, 0.72, 0, 1);
+    }
+    .btn-hardware:hover .btn-inner-lens {
+      transform: translateX(3px);
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    /* WORKFLOW ACTIVITY TIMELINE */
+    .timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      position: relative;
+      padding-left: 20px;
+      margin-top: 14px;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      top: 6px;
+      bottom: 6px;
+      left: 5px;
+      width: 2px;
+      background: rgba(255, 255, 255, 0.08);
+    }
+    .timeline-node {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+    .node-pip {
+      position: absolute;
+      left: -20px;
+      top: 4px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      border: 2px solid #090e1a;
+    }
+    .pip-emerald { background: #10b981; box-shadow: 0 0 10px #10b981; }
+    .pip-blue { background: #3b82f6; box-shadow: 0 0 10px #3b82f6; }
+    .pip-violet { background: #a855f7; box-shadow: 0 0 10px #a855f7; }
+
+    .node-text {
+      font-size: 0.88rem;
+      font-weight: 650;
+      color: #ffffff;
+    }
+    .node-time {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.74rem;
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+<body>
+  <div class="ambient-orb-1"></div>
+  <div class="ambient-orb-2"></div>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div style="font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; font-size: 0.95rem; color: #ffffff; display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+      <span style="color: #38bdf8;">◆</span>
+      <span>WORKSPACE</span>
+    </div>
+    <div class="sidebar-nav-item active"><span>🏠</span> <span>Home</span></div>
+    <div class="sidebar-nav-item"><span>🔀</span> <span>Workflows</span></div>
+    <div class="sidebar-nav-item"><span>🗄️</span> <span>Sources</span></div>
+    <div class="sidebar-nav-item"><span>🧠</span> <span>Models</span></div>
+    <div class="sidebar-nav-item"><span>🕒</span> <span>History</span></div>
+
+    <div class="sidebar-bottom">
+      <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); padding: 12px; border-radius: 12px; font-size: 0.76rem; color: #94a3b8; line-height: 1.4;">
+        <span style="color: #34d399; font-weight: 700;">● VOLATILE MEMORY</span><br>
+        Proprietary tokens remain strictly encrypted in volatile session state.
+      </div>
+      <div class="sidebar-nav-item"><span>⚙️</span> <span>Settings</span></div>
+    </div>
+  </aside>
+
+  <!-- MAIN VIEWPORT -->
+  <main class="main-viewport">
+    <!-- TOP COMMAND BAR -->
+    <header class="command-bar">
+      <div class="brand-left">
+        <div class="prism-logo">◆</div>
+        <div class="brand-title">INTELLIGENT CLIENT DATA PREP</div>
+      </div>
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <div style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 6px 14px; font-size: 0.78rem; font-weight: 600; color: #cbd5e1;">
+          👤 Users ▾
+        </div>
+        <div class="hud-badge">
+          <span class="hud-dot"></span>
+          <span>100% FIDELITY • ENCRYPTED</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- 3 PHASE CARDS (DOPPELRAND CHASSIS) -->
+    <div class="phase-deck">
+      <!-- PHASE 1 -->
+      <div class="doppelrand-chassis" style="border-color: rgba(16, 185, 129, 0.4);">
+        <div class="doppelrand-core">
+          <div class="phase-header-row">
+            <span class="phase-tag tag-emerald">Phase 1: INGEST</span>
+            <span style="color: #34d399; font-weight: 800; font-size: 0.76rem;">✓ 85%</span>
+          </div>
+          <div class="phase-title">Ingest & Validation</div>
+          <div class="laser-track">
+            <div class="laser-fill-emerald"></div>
+          </div>
+          <div class="sub-steps">
+            <span class="sub-step sub-step-done">✓ 1. Upload</span>
+            <span class="sub-step sub-step-done">✓ 2. Profile</span>
+            <span class="sub-step sub-step-active">3. Clean</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="phase-chevron">›</div>
+
+      <!-- PHASE 2 -->
+      <div class="doppelrand-chassis">
+        <div class="doppelrand-core">
+          <div class="phase-header-row">
+            <span class="phase-tag tag-blue">Phase 2: TRANSFORM</span>
+            <span style="color: #60a5fa; font-weight: 800; font-size: 0.76rem;">50%</span>
+          </div>
+          <div class="phase-title">Cleanse & Map</div>
+          <div class="laser-track">
+            <div class="laser-fill-blue"></div>
+          </div>
+          <div class="sub-steps">
+            <span class="sub-step sub-step-pending">4. AI Setup</span>
+            <span class="sub-step sub-step-pending">5. Classify</span>
+            <span class="sub-step sub-step-pending">6. Transform</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="phase-chevron">›</div>
+
+      <!-- PHASE 3 -->
+      <div class="doppelrand-chassis">
+        <div class="doppelrand-core">
+          <div class="phase-header-row">
+            <span class="phase-tag tag-violet">Phase 3: PREVIEW</span>
+            <span style="color: #c084fc; font-weight: 800; font-size: 0.76rem;">Upcoming 15%</span>
+          </div>
+          <div class="phase-title">Final Review & Export</div>
+          <div class="laser-track">
+            <div class="laser-fill-violet"></div>
+          </div>
+          <div class="sub-steps">
+            <span class="sub-step sub-step-pending">7. Reconcile</span>
+            <span class="sub-step sub-step-pending">8. Review</span>
+            <span class="sub-step sub-step-pending">9. Export</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4 KPI CARDS (DOPPELRAND CHASSIS) -->
+    <div class="kpi-row">
+      <div class="doppelrand-chassis">
+        <div class="doppelrand-core">
+          <div class="kpi-label">Total Records</div>
+          <div class="kpi-val-row">
+            <span class="kpi-val">345,712</span>
+            <svg width="74" height="24" viewBox="0 0 74 24" fill="none">
+              <path d="M2 19 L14 17 L26 13 L38 15 L50 7 L62 10 L72 3" stroke="#10b981" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="kpi-sub">Shipment rows loaded</div>
+        </div>
+      </div>
+
+      <div class="doppelrand-chassis">
+        <div class="doppelrand-core">
+          <div class="kpi-label">Validated Rows</div>
+          <div class="kpi-val-row">
+            <span class="kpi-val">298,401 <span style="font-size: 0.92rem; font-weight: 600; color: #94a3b8;">| 86.3%</span></span>
+            <svg width="74" height="24" viewBox="0 0 74 24" fill="none">
+              <path d="M2 17 L14 18 L26 12 L38 14 L50 9 L62 5 L72 7" stroke="#3b82f6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="kpi-sub">Zero variance verified</div>
+        </div>
+      </div>
+
+      <div class="doppelrand-chassis">
+        <div class="doppelrand-core">
+          <div class="kpi-label">Mapped Clients</div>
+          <div class="kpi-val-row">
+            <span class="kpi-val">12,985 <span style="font-size: 0.92rem; font-weight: 600; color: #94a3b8;">| 102/m</span></span>
+            <svg width="74" height="24" viewBox="0 0 74 24" fill="none">
+              <path d="M2 16 L14 17 L26 12 L40 14 L52 9 L64 12 L72 4" stroke="#38bdf8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="kpi-sub">Canonical NIQ dictionaries</div>
+        </div>
+      </div>
+
+      <div class="doppelrand-chassis">
+        <div class="doppelrand-core">
+          <div class="kpi-label">Error Rate</div>
+          <div class="kpi-val-row">
+            <span class="kpi-val">1.7%</span>
+            <svg width="74" height="24" viewBox="0 0 74 24" fill="none">
+              <path d="M2 18 L16 18 L28 17 L40 5 L52 19 L64 17 L72 18" stroke="#f43f5e" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="kpi-sub">5.8k duplicate issues isolated</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2-COLUMN BENTO GRID -->
+    <div class="bento-grid">
+      <!-- LEFT: VIEWFINDER HUD UPLOAD DOCKING PORT -->
+      <div class="doppelrand-chassis">
+        <div class="doppelrand-core" style="padding: 24px;">
+          <div class="docking-port">
+            <div class="hud-corner hud-tl"></div>
+            <div class="hud-corner hud-tr"></div>
+            <div class="hud-corner hud-bl"></div>
+            <div class="hud-corner hud-br"></div>
+
+            <div class="beacon-icon">⤊</div>
+            <div class="dock-title">Drag & Drop data files or Click to Upload</div>
+            <div class="dock-sub">Supported formats: CSV, JSON, XLSX, Parquet | Max 2GB</div>
+
+            <button class="btn-hardware">
+              <span>Process Files</span>
+              <span class="btn-inner-lens">→</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: WORKFLOW ACTIVITY -->
+      <div class="doppelrand-chassis">
+        <div class="doppelrand-core">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <h4 style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.05rem; font-weight: 800; color: white;">Workflow Activity</h4>
+            <span style="color: #64748b; font-size: 1.1rem; cursor: pointer;">•••</span>
+          </div>
+
+          <div class="timeline">
+            <div class="timeline-node">
+              <span class="node-pip pip-emerald"></span>
+              <span class="node-text">Ingest & Client workflows</span>
+              <span class="node-time">25 minutes ago</span>
+            </div>
+            <div class="timeline-node">
+              <span class="node-pip pip-blue"></span>
+              <span class="node-text">Export & shelter workflows</span>
+              <span class="node-time">22 minutes ago</span>
+            </div>
+            <div class="timeline-node">
+              <span class="node-pip pip-violet"></span>
+              <span class="node-text">Separated Bala workflows</span>
+              <span class="node-time">22 minutes ago</span>
+            </div>
+            <div class="timeline-node">
+              <span class="node-pip pip-blue"></span>
+              <span class="node-text">Export Work-flows & Pressunt Completed</span>
+              <span class="node-time">37 minutes ago</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</body>
+</html>
+

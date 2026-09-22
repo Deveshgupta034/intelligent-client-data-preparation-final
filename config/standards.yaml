@@ -1,0 +1,34 @@
+country:
+  india: India
+  ind: India
+  in: India
+  united states: United States
+  usa: United States
+  us: United States
+  united kingdom: United Kingdom
+  uk: United Kingdom
+  gb: United Kingdom
+channel:
+  ecommerce: E-commerce
+  e-commerce: E-commerce
+  e commerce: E-commerce
+  online: E-commerce
+  modern: Modern Trade
+  modern trade: Modern Trade
+  supermarket: Modern Trade
+  hypermarket: Modern Trade
+  traditional: Traditional Trade
+  traditional trade: Traditional Trade
+  general trade: Traditional Trade
+  wholesale: Wholesale
+  cash and carry: Wholesale
+region:
+  north: North
+  northern: North
+  south: South
+  southern: South
+  east: East
+  eastern: East
+  west: West
+  western: West
+  central: Central
