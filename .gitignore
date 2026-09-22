@@ -1,6 +1,29 @@
+# Virtual Environments & Python cache
 .venv/
+venv/
+ENV/
+env/
 __pycache__/
-.pytest_cache/
-.streamlit/secrets.toml
-.env
 *.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+
+# Streamlit local secrets
+.streamlit/secrets.toml
+
+# Environment & credentials
+.env
+.env.*
+
+# Local Agent & IDE Configuration folders
+.agent/
+.agents/
+
+# Generated zip packages & binary archives
+*.zip
+
+# Temporary design mocks & scratch files
+crazy_taste_demo.html
+crazy_taste_mockup.jpg
+mockup_preview.png
